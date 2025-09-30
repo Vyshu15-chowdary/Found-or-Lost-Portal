@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+// Import logo from src/assets
+import collegeLogo from "../assets/college-logo.jpeg";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   // Dummy auth state (replace with real auth context)
-  const isLoggedIn = false; // Change to true if user logged in
+  const isLoggedIn = false; // Change to true if user is logged in
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -24,11 +27,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img
-              src="/college-logo.png"
-              alt="College Logo"
-              className="h-10 mr-2"
-            />
+            <img src={collegeLogo} alt="College Logo" className="h-10 mr-2" />
             <span className="font-bold text-xl text-blue-600">
               Lost & Found Portal
             </span>

@@ -7,10 +7,14 @@ import Found from "./Pages/Found.jsx";
 import Lost from "./Pages/Lost.jsx";
 import Login from "./Pages/Login.jsx";
 import Signup from "./Pages/Signup.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   return (
+    <>
+    
     <BrowserRouter>
+    <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About/>}/>
@@ -19,8 +23,10 @@ function App() {
         <Route path="/Lost"element={<Lost/>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="signUp" element={<Signup/>}/>
+       
       </Routes>
     </BrowserRouter>
+    </>
   );
 }
 
