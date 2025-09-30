@@ -5,6 +5,7 @@ import About from "./Pages/About.jsx";
 import Dashboard  from "./Pages/Dashboard.jsx";
 import Found from "./Pages/Found.jsx";
 import Lost from "./Pages/Lost.jsx";
+import Login from "./Pages/Login.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/Found" element={<Found/>}/>
         <Route path="/Lost"element={<Lost/>}/>
+        <Route path="/Login" element={<Login/>}/>
       </Routes>
     </BrowserRouter>
   );
