@@ -1,53 +1,49 @@
-import { useState, useEffect } from "react";
+// src/Pages/Found.jsx
+import React, { useEffect, useState } from "react";
+import ItemCard from "../components/ItemCard";
+import { getItems } from "../Services/itemService.js";
 
 export default function Found() {
-  // Dummy data (replace with API later)
-  const [foundItems, setFoundItems] = useState([
-    {
-      id: 1,
-      title: "Blue Water Bottle",
-      description: "Found in canteen near the counter",
-      date: "2025-09-29",
-      location: "Canteen",
-    },
-    {
-      id: 2,
-      title: "Black Umbrella",
-      description: "Found in library study hall",
-      date: "2025-09-27",
-      location: "Library",
-    },
-  ]);
+  const [foundItems, setFoundItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Later fetch from backend
   useEffect(() => {
-    // Example: axios.get("/api/items/found").then(res => setFoundItems(res.data));
+    const fetchFoundItems = async () => {
+      try {
+        const items = await getItems(); // fetch all items from backend
+        setFoundItems(items.filter((item) => item.type === "found"));
+      } catch (err) {
+        console.error("Failed to fetch found items:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFoundItems();
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Found Items</h1>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="max-w-6xl mx-auto px-4 mt-24">
+        <h2 className="text-3xl font-bold mb-6 text-center text-green-600">
+          Found Items
+        </h2>
 
-      {foundItems.length === 0 ? (
-        <p className="text-center text-gray-500">No found items yet.</p>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-6">
-          {foundItems.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-md rounded-lg p-4 border hover:shadow-lg transition"
-            >
-              <span className="inline-block px-3 py-1 text-sm rounded-full mb-2 bg-green-100 text-green-600">
-                Found
-              </span>
-              <h2 className="text-xl font-semibold">{item.title}</h2>
-              <p className="text-gray-600">{item.description}</p>
-              <p className="text-gray-400 text-sm mt-2">📅 {item.date}</p>
-              <p className="text-gray-400 text-sm mt-1">📍 {item.location}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        {loading ? (
+          <p className="text-center">Loading...</p>
+        ) : foundItems.length === 0 ? (
+          <p className="text-center text-gray-600">
+            No found items reported yet.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {foundItems.map((item) => (
+              <ItemCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
