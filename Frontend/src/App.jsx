@@ -10,6 +10,7 @@ import Signup from "./Pages/Signup.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import ItemCard from "./components/ItemCard.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
    
     <BrowserRouter>
        <Navbar/>
+        <AuthProvider/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About/>}/>
