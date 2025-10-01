@@ -57,7 +57,8 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="bg-gray-800 text-center py-4 text-sm text-gray-400 border-t border-gray-700">
-        © {new Date().getFullYear()} Your College Name — All Rights Reserved
+        © {new Date().getFullYear()} NARAYANA ENGINEERING COLLEGE NELLORE — All Rights Reserved.
+        developed by vyshnavi yendluri
       </div>
     </footer>
   );
