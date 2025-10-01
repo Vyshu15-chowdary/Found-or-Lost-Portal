@@ -1,4 +1,4 @@
-
+// src/Pages/Signup.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../Services/authService.js";
@@ -6,9 +6,9 @@ import { signup } from "../Services/authService.js";
 export default function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
-    password: ""
+    password: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,10 +21,11 @@ export default function Signup() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      await signup(formData);
-      alert("Signup successful! Please login.");
-      navigate("/login");
+      await signup(formData); // sends {username, email, password}
+      alert("Signup successful!");
+      navigate("/login"); // redirect to login page
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Signup failed");
@@ -36,14 +37,15 @@ export default function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full bg-white p-8 rounded shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
-            name="name"
-            placeholder="Name"
-            value={formData.name}
+            name="username"
+            placeholder="Username"
+            value={formData.username}
             onChange={handleChange}
             required
             className="w-full border px-3 py-2 rounded"
@@ -71,7 +73,7 @@ export default function Signup() {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
           >
-            {loading ? "Signing up..." : "Signup"}
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
       </div>

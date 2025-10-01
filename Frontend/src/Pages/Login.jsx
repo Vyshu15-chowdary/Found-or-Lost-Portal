@@ -17,9 +17,11 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      await login(formData);
-      navigate("/dashboard"); // redirect after login
+      await login(formData); // sends {email, password}
+      alert("Login successful!");
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Login failed");

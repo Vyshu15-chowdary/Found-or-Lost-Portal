@@ -1,10 +1,10 @@
 // src/Services/authService.js
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth/signup";
+const API_URL = "http://localhost:5000/api/auth"; // base URL
 
 export const signup = async (userData) => {
-  const response = await axios.post(`${API_URL}/signup`, userData);
+  const response = await axios.post(`${API_URL}/signup`, userData); // correct
   return response.data;
 };
 
@@ -27,7 +27,6 @@ export const getCurrentUser = () => {
   return user ? JSON.parse(user) : null;
 };
 
-// ✅ Add this function to provide token for itemService
 export const getToken = () => {
   return localStorage.getItem("token");
 };
