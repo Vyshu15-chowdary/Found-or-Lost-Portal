@@ -8,6 +8,8 @@ import Lost from "./Pages/Lost.jsx";
 import Login from "./Pages/Login.jsx";
 import Signup from "./Pages/Signup.jsx";
 import Navbar from "./components/Navbar.jsx";
+import EditItem from "./Pages/Edititem.jsx";
+import Footer from "./components/Footer.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import AddItem from "./components/Additem.jsx";
@@ -26,11 +28,12 @@ function App() {
         <Route path="/Found" element={<Found/>}/>
         <Route path="/Lost"element={<Lost/>}/>
         <Route path="/Login" element={<Login/>}/>
-        <Route path="signUp" element={<Signup/>}/>
+        <Route path="/signUp" element={<Signup/>}/>
         <Route path = "/add-item" element={<AddItem/>}/>
+        <Route path="/edit-item/:id" element={<EditItem/>}/>
        
       </Routes>
-     
+     <Footer/>
       
     </BrowserRouter>
    
