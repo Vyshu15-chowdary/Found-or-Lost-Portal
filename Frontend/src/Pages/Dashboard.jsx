@@ -1,77 +1,91 @@
+// src/Pages/Dashboard.jsx
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import ItemCard from "../components/ItemCard";
-import { getItems, deleteItem } from "../Services/itemService.js";
 
 export default function Dashboard() {
-  const [myItems, setMyItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-  // Fetch user items on mount
-  useEffect(() => {
-    const fetchMyItems = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
-      try {
-        const items = await getItems(); // Fetch all items
-        setMyItems(items); // Optionally filter by userId from backend
-      } catch (err) {
-        console.error("Failed to fetch items:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMyItems();
-  }, [navigate]);
-
-  // Delete an item
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this item?")) return;
+  // Fetch items from backend
+  const fetchItems = async () => {
     try {
-      await deleteItem(id); // call backend API to delete
-      setMyItems(myItems.filter((item) => item.id !== id)); // remove from UI
+      const res = await axios.get("http://localhost:5000/api/items");
+      setItems(res.data);
     } catch (err) {
-      console.error("Failed to delete item:", err);
+      console.error(err);
+      setError("Failed to load items.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading items...</p>;
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  // Delete item
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/items/${id}`);
+      setItems(items.filter((item) => item.id !== id));
+      alert("Item deleted successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete item.");
+    }
+  };
+
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   return (
-    <div className="max-w-6xl mx-auto mt-10 px-4">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold">My Dashboard</h2>
-        <button
-          onClick={() => navigate("/add-item")}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          + Add New Item
-        </button>
-      </div>
-
-      {/* Items Grid */}
-      {myItems.length === 0 ? (
-        <p className="text-center text-gray-600 mt-10">
-          You have not added any items yet.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {myItems.map((item) => (
-            <ItemCard
-              key={item.id}
-              item={item}
-              onEdit={() => navigate(`/edit-item/${item.id}`)}
-              onDelete={() => handleDelete(item.id)}
-            />
-          ))}
+    <div className="min-h-screen bg-gray-50 py-10 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">📂 My Dashboard</h1>
+          <Link
+            to="/add-item"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded"
+          >
+            + Add New Item
+          </Link>
         </div>
-      )}
+
+        {/* Items Grid */}
+        {items.length === 0 ? (
+          <p className="text-gray-600">You have not added any items yet.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {items.map((item) => (
+              <div key={item.id} className="relative">
+                <ItemCard item={item} />
+
+                {/* Action Buttons */}
+                <div className="flex justify-between mt-2">
+                  <Link
+                    to={`/edit-item/${item.id}`} // you can later build EditItem.jsx
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
