@@ -1,7 +1,7 @@
-// src/Pages/Signup.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../Services/authService";
+import { signup } from "../Services/authService.js";
 
 export default function Signup() {
   const navigate = useNavigate();
