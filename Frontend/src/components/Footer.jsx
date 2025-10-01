@@ -50,8 +50,8 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold text-white mb-3">Contact</h3>
           <p className="text-gray-400">📍 Narayana Engineering College, Nellore</p>
-          <p className="text-gray-400">📧 support@college.edu</p>
-          <p className="text-gray-400">📞 +91 98765 43210</p>
+          <p className="text-gray-400">📧 Necn@gmail.com</p>
+          <p className="text-gray-400">📞 +91 93929 01051</p>
         </div>
       </div>
 
