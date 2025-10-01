@@ -8,6 +8,7 @@ import Lost from "./Pages/Lost.jsx";
 import Login from "./Pages/Login.jsx";
 import Signup from "./Pages/Signup.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="signUp" element={<Signup/>}/>
        
       </Routes>
+      <Footer/>
     </BrowserRouter>
     </>
   );
