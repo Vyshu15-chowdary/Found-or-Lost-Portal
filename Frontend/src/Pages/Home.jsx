@@ -1,102 +1,77 @@
-import { useState, useEffect } from "react";
+// src/pages/Home.jsx
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import ItemCard from "../components/ItemCard.jsx";
 
-// Import your images
-import collegeLogo from "../assets/college-logo.jpeg";
-import heroImage from "../assets/college-hero.jpeg";
 
 export default function Home() {
-  const [items, setItems] = useState([
+  // Dummy data (replace later with backend data from MongoDB)
+  const items = [
     {
       id: 1,
-      type: "Lost",
-      title: "Black Wallet",
-      description: "Lost near library",
-      date: "2025-09-28",
+      name: "Black Wallet",
+      description: "Contains ID card and some cash",
+      location: "Library",
+      date: "2025-09-29",
+      image: "/wallet.jpeg",
+      type: "lost",
     },
     {
       id: 2,
-      type: "Found",
-      title: "Blue Water Bottle",
-      description: "Found in canteen",
-      date: "2025-09-29",
+      name: "Blue Water Bottle",
+      description: "Milton 1L blue bottle",
+      location: "Cafeteria",
+      date: "2025-09-28",
+      image: "/waterbottle.jpeg",
+      type: "found",
     },
     {
-        id:3,
-        type:"Found",
-        title:"boat earpods",
-        description:"Found in 209 A-block",
-        date:"2025-09-28",
-    }
-  ]);
-
-  // Later fetch from backend
-  useEffect(() => {
-    // axios.get("/api/items").then(res => setItems(res.data));
-  }, []);
+      id: 3,
+      name: "Scientific Calculator",
+      description: "Casio fx-991ES PLUS, left in exam hall",
+      location: "Exam Hall A",
+      date: "2025-09-27",
+      image: "/calculator.jpeg",
+      type: "lost",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-md p-4 flex items-center">
-        <img src={collegeLogo} alt="College Logo" className="h-12 mr-4" />
-        <h1 className="text-2xl font-bold text-blue-600">
-          Narayana Engineering College Lost & Found Portal
-        </h1>
-      </header>
+    <div className="min-h-screen flex flex-col">
+     
+      
 
       {/* Hero Section */}
-      <section className="relative">
+      <section className="bg-blue-900 text-white py-12 px-6 text-center">
         <img
-          src={heroImage}
-          alt="College Campus"
-          className="w-full h-64 object-cover brightness-90"
+          src="/college-logo.jpeg"
+          alt="College Logo"
+          className="mx-auto mb-4 w-24 h-24"
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h2 className="text-3xl md:text-5xl text-blue-500 font-bold text-center">
-            Helping Students Recover Lost Items Quickly
-          </h2>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section className="p-6 text-center">
-        <h3 className="text-2xl font-semibold mb-4">About This Portal</h3>
-        <p className="text-gray-700 max-w-2xl mx-auto">
-          This portal helps students report lost items and claim found items
-          across the college campus. Users can post details of lost or found
-          belongings, search for items, and connect with the owner/finder
-          directly.
+        <h1 className="text-4xl md:text-5xl font-bold">
+          College Lost & Found Portal
+        </h1>
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-200">
+          This portal helps students and staff report lost items and return
+          found items. Together, let’s make sure nothing important stays lost!
         </p>
       </section>
 
-      {/* Latest Lost & Found Items */}
-      <section className="p-6">
-        <h3 className="text-2xl font-semibold mb-4 text-center">
+      {/* Items Section */}
+      <section className="flex-grow py-12 px-6 bg-gray-50">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           Latest Lost & Found Items
-        </h3>
+        </h2>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           {items.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-md rounded-lg p-4 border hover:shadow-lg transition"
-            >
-              <span
-                className={`inline-block px-3 py-1 text-sm rounded-full mb-2 ${
-                  item.type === "Lost"
-                    ? "bg-red-100 text-red-600"
-                    : "bg-green-100 text-green-600"
-                }`}
-              >
-                {item.type}
-              </span>
-              <h2 className="text-xl font-semibold">{item.title}</h2>
-              <p className="text-gray-600">{item.description}</p>
-              <p className="text-gray-400 text-sm mt-2">📅 {item.date}</p>
-            </div>
+            <ItemCard key={item.id} item={item} />
           ))}
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

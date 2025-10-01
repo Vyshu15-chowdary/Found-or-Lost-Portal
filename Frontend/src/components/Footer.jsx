@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import collegeLogo from "../assets/college-logo.jpeg";
+
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Logo + About */}
         <div>
           <div className="flex items-center mb-4">
-            <img src={collegeLogo} alt="College Logo" className="h-10 mr-2" />
+            <img src="/college-logo.jpeg" alt="College Logo" className="h-10 mr-2" />
             <span className="text-xl font-bold text-yellow-400">
               Lost & Found Portal
             </span>

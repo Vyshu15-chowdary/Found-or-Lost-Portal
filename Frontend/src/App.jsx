@@ -9,13 +9,14 @@ import Login from "./Pages/Login.jsx";
 import Signup from "./Pages/Signup.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
+import ItemCard from "./components/ItemCard.jsx";
 
 function App() {
   return (
     <>
-    
+   
     <BrowserRouter>
-    <Navbar/>
+       <Navbar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About/>}/>
@@ -26,9 +27,12 @@ function App() {
         <Route path="signUp" element={<Signup/>}/>
        
       </Routes>
-      <Footer/>
+     
+      
     </BrowserRouter>
+   
     </>
+    
   );
 }
 
