@@ -1,53 +1,52 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { login, setToken } from "../Services/authService.js";
+import { useNavigate } from "react-router-dom";
 
-export default function Lost() {
-  // Dummy data (replace with API later)
-  const [lostItems, setLostItems] = useState([
-    {
-      id: 1,
-      title: "Black Wallet",
-      description: "Lost near library",
-      date: "2025-09-28",
-      location: "Library",
-    },
-    {
-      id: 2,
-      title: "ID Card",
-      description: "Lost in parking area",
-      date: "2025-09-30",
-      location: "Parking Lot",
-    },
-  ]);
+export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  // Later fetch from backend
-  useEffect(() => {
-    // Example: axios.get("/api/items/lost").then(res => setLostItems(res.data));
-  }, []);
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await login(form);
+    if (res.token) {
+      setToken(res.token);
+      navigate("/dashboard");
+    } else {
+      setError(res.message || "Login failed");
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Lost Items</h1>
-
-      {lostItems.length === 0 ? (
-        <p className="text-center text-gray-500">No lost items reported yet.</p>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-6">
-          {lostItems.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white shadow-md rounded-lg p-4 border hover:shadow-lg transition"
-            >
-              <span className="inline-block px-3 py-1 text-sm rounded-full mb-2 bg-red-100 text-red-600">
-                Lost
-              </span>
-              <h2 className="text-xl font-semibold">{item.title}</h2>
-              <p className="text-gray-600">{item.description}</p>
-              <p className="text-gray-400 text-sm mt-2">📅 {item.date}</p>
-              <p className="text-gray-400 text-sm mt-1">📍 {item.location}</p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="max-w-md mx-auto mt-10">
+      <h2 className="text-2xl font-bold mb-4">Login</h2>
+      {error && <p className="text-red-500">{error}</p>}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+          className="w-full border p-2"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          className="w-full border p-2"
+          required
+        />
+        <button className="w-full bg-blue-500 text-white p-2">Login</button>
+      </form>
     </div>
   );
 }
