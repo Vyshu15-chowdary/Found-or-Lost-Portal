@@ -1,4 +1,4 @@
-// src/Pages/Home.jsx
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/ItemCard.jsx";
@@ -42,7 +42,7 @@ export default function Home() {
       {/* Hero Section */}
       <section
         className="relative bg-cover bg-center h-[450px] flex items-center justify-center"
-        style={{ backgroundImage: "url('/college-hero.jpg')" }}
+        style={{ backgroundImage: "url('/college-hero.jpeg')" }}
       >
         <div className="bg-black bg-opacity-50 p-6 rounded text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">

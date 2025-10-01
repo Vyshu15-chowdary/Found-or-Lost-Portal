@@ -9,7 +9,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = getToken();
-    setIsLoggedIn(!!token); // true if token exists
+    setIsLoggedIn(!!token); 
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -36,7 +36,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center">
             <img src="/college-logo.jpeg" alt="College Logo" className="h-10 mr-2" />
             <span className="font-bold text-xl text-blue-600">
-              Lost & Found Portal
+              NARAYANA ENGINEERING COLLEGE NELLORE ( Lost & Found Portal)
             </span>
           </Link>
 
