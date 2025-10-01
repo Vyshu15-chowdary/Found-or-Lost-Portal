@@ -1,52 +1,43 @@
-import React, { useState } from "react";
-import { login, setToken } from "../Services/authService.js";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { getItems } from "../Services/itemService";
 
-export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+export default function Lost() {
+  const [lostItems, setLostItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    const fetchLostItems = async () => {
+      const items = await getItems();
+      // Filter only lost items
+      const lost = items.filter((item) => item.type === "lost");
+      setLostItems(lost);
+      setLoading(false);
+    };
+    fetchLostItems();
+  }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await login(form);
-    if (res.token) {
-      setToken(res.token);
-      navigate("/dashboard");
-    } else {
-      setError(res.message || "Login failed");
-    }
-  };
+  if (loading) return <p className="text-center mt-10">Loading lost items...</p>;
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full border p-2"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full border p-2"
-          required
-        />
-        <button className="w-full bg-blue-500 text-white p-2">Login</button>
-      </form>
+    <div className="max-w-4xl mx-auto mt-10">
+      <h2 className="text-3xl font-bold mb-6 text-center">Lost Items</h2>
+      {lostItems.length === 0 ? (
+        <p className="text-center">No lost items found.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {lostItems.map((item) => (
+            <div
+              key={item.id}
+              className="border p-4 rounded shadow hover:shadow-lg transition"
+            >
+              <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+              <p className="text-gray-700 mb-2">{item.description}</p>
+              <p className="text-gray-500 mb-1">Location: {item.location}</p>
+              <p className="text-gray-500">Date: {new Date(item.date).toLocaleDateString()}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
