@@ -1,6 +1,5 @@
-// src/Pages/Found.jsx
 import React, { useEffect, useState } from "react";
-import ItemCard from "../components/ItemCard";
+import ItemCard from "../components/itemCard.jsx";
 import { getItems } from "../Services/itemService.js";
 
 export default function Found() {
@@ -10,8 +9,8 @@ export default function Found() {
   useEffect(() => {
     const fetchFoundItems = async () => {
       try {
-        const items = await getItems(); // fetch all items from backend
-        setFoundItems(items.filter((item) => item.type === "found"));
+        const items = await getItems(); // fetch all items
+        setFoundItems(items.filter((item) => item.status === "found")); // use status
       } catch (err) {
         console.error("Failed to fetch found items:", err);
       } finally {
@@ -24,7 +23,6 @@ export default function Found() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="max-w-6xl mx-auto px-4 mt-24">
         <h2 className="text-3xl font-bold mb-6 text-center text-green-600">
           Found Items

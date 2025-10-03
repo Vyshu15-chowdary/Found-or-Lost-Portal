@@ -13,7 +13,7 @@ import Footer from "./components/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
-import AddItem from "./components/Additem.jsx";
+import AddItem from "./Pages/Additem.jsx";
 
 function App() {
   return (
@@ -33,7 +33,8 @@ function App() {
         <Route path="/Lost"element={<ProtectedRoute><Lost/></ProtectedRoute>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/signUp" element={<Signup/>}/>
-        <Route path = "/add-item" element={<AddItem/>}/>
+        <Route path = "/items" element={<Found/>}/>
+        <Route path ="/Add-item" element={<AddItem/>}/>
         <Route path="/edit-item/:id" element={<EditItem/>}/>
         
        

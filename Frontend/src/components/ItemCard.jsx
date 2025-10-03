@@ -1,4 +1,5 @@
-// src/components/ItemCard.jsx
+import React from "react";
+
 export default function ItemCard({ item }) {
   if (!item) {
     return (
@@ -14,7 +15,7 @@ export default function ItemCard({ item }) {
       <div className="relative">
         <img
           src={item.image || "/placeholder.png"}
-          alt={item.name || "Unknown Item"}
+          alt={item.title || "Unknown Item"}
           className="w-full h-48 object-cover"
         />
         <span
@@ -31,15 +32,15 @@ export default function ItemCard({ item }) {
       {/* Item Content */}
       <div className="p-5">
         <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition">
-          {item.name || "Unnamed Item"}
+          {item.title || "Unnamed Item"}
         </h2>
         <p className="text-sm text-gray-600 mt-1 line-clamp-2">
           {item.description || "No description provided"}
         </p>
 
         <div className="mt-3 space-y-1 text-sm text-gray-500">
-          <p>📍 {item.location || "Unknown Location"}</p>
-          <p>📅 {item.date || "Unknown Date"}</p>
+          <p>📍 {item.contact || "No contact provided"}</p>
+          <p>📅 {item.created_at?.slice(0, 10) || "Unknown Date"}</p>
         </div>
 
         {/* Actions */}
@@ -54,7 +55,6 @@ export default function ItemCard({ item }) {
   );
 }
 
-// A small reusable button (just for fun)
 function LinkButton({ type }) {
   return (
     <span
