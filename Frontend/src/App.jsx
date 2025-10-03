@@ -11,8 +11,7 @@ import Navbar from "./components/Navbar.jsx";
 import EditItem from "./Pages/Edititem.jsx";
 import Footer from "./components/Footer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import AdminItems from "./Pages/AdminItems.jsx";
-import AdminUsers from "./Pages/AdminUsers.jsx";
+
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import AddItem from "./Pages/Additem.jsx";
@@ -38,8 +37,7 @@ function App() {
         <Route path = "/items" element={<Found/>}/>
         <Route path ="/Add-item" element={<AddItem/>}/>
         <Route path="/edit-item/:id" element={<EditItem/>}/>
-        <Route path="/admin/items" element={<AdminItems/>}/>
-        <Route path ="/admin/users" element={<AdminUsers/>}/>
+       
         
        
       </Routes>
