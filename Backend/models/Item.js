@@ -7,6 +7,7 @@ const Item = sequelize.define("Item", {
   location: { type: DataTypes.STRING, allowNull: false },
   date: { type: DataTypes.DATE, allowNull: false },
   type: { type: DataTypes.ENUM("lost", "found"), allowNull: false },
+  image: { type: DataTypes.STRING, allowNull: true }
 });
 
 export default Item;
