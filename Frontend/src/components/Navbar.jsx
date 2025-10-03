@@ -51,6 +51,7 @@ export default function Navbar() {
             <NavLink to="/lost" label="Lost" />
             <NavLink to="/found" label="Found" />
             <NavLink to ="/about" label="About"/>
+            <NavLink to ="/dashboard"label="Dashboard"/>
 
             {isLoggedIn ? (
               <>
@@ -118,6 +119,7 @@ export default function Navbar() {
           <NavLink to="/lost" label="Lost" mobile onClick={toggleMenu} />
           <NavLink to="/found" label="Found" mobile onClick={toggleMenu} />
           <NavLink to ="/about" label="About" mobile onClick={toggleMenu}/>
+          <NavLink to="/dashboard" label ="Dashboard" mobile onClick={toggleMenu}/>
 
           {isLoggedIn ? (
             <>
