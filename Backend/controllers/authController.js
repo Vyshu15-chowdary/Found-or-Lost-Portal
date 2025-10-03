@@ -2,7 +2,7 @@ import db from "../config/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "your_jwt_secret_here"; // replace with .env in production
+const JWT_SECRET =" Process.env.JWT_SECRET"; // replace with .env in production
 
 // Register user
 export const registerUser = async (req, res) => {

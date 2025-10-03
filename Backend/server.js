@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import authRoutes from "./routes/auth.js";
 
 import itemRoutes from "./routes/itemRoutes.js";
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => res.send("Found or Lost Portal API running"));
 
 // Use routes
 app.use("/api/items", itemRoutes);
+app.use("/api/auth",authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
