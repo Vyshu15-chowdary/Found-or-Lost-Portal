@@ -20,12 +20,12 @@ export default function ItemCard({ item }) {
         />
         <span
           className={`absolute top-3 left-3 px-3 py-1 text-xs rounded-full font-semibold shadow-md ${
-            item.type === "lost"
+            item.status === "lost"
               ? "bg-red-500 text-white"
               : "bg-green-500 text-white"
           }`}
         >
-          {item.type === "lost" ? "Lost" : "Found"}
+          {item.status === "lost" ? "Lost" : "Found"}
         </span>
       </div>
 
@@ -48,7 +48,7 @@ export default function ItemCard({ item }) {
           <button className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition">
             Contact
           </button>
-          <LinkButton type={item.type} />
+          <LinkButton type={item.status} />
         </div>
       </div>
     </div>

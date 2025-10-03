@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ItemCard from "../components/ItemCard";
+import ItemCard from "../components/itemCard.jsx";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
