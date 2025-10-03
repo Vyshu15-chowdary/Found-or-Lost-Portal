@@ -18,8 +18,7 @@ app.get("/", (req, res) => res.send("Found or Lost Portal API running"));
 
 // Use routes
 app.use("/api/items", itemRoutes);
-app.use("/api/auth",authRoutes);
-app.use("/api/admin",adminRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
