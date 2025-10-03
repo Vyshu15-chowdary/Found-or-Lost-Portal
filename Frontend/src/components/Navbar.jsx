@@ -1,31 +1,34 @@
 // src/components/Navbar.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getToken, logout } from "../Services/authService.js";
+import { getToken, logout, getUser } from "../Services/authService.js";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = getToken();
     setIsLoggedIn(!!token);
+
+    // Get logged-in user info (adjust based on your authService)
+    const loggedUser = getUser(); 
+    setUser(loggedUser);
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const handleDashboard = () => {
-    if (isLoggedIn) {
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
-    }
+    if (isLoggedIn) navigate("/dashboard");
+    else navigate("/login");
   };
 
   const handleLogout = () => {
     logout();
     setIsLoggedIn(false);
+    setUser(null);
     navigate("/login");
   };
 
@@ -50,11 +53,34 @@ export default function Navbar() {
             <NavLink to="/" label="Home" />
             <NavLink to="/lost" label="Lost" />
             <NavLink to="/found" label="Found" />
-            <NavLink to ="/about" label="About"/>
-          
+            <NavLink to="/about" label="About" />
 
             {isLoggedIn ? (
               <>
+                {/* Admin Menu (only visible if user is admin) */}
+                {user?.isAdmin && (
+                  <div className="relative group">
+                    <button className="px-3 py-2 text-gray-700 hover:text-blue-600 transition">
+                      Admin ▼
+                    </button>
+                    <div className="absolute hidden group-hover:block bg-gray-100 text-gray-800 mt-1 rounded shadow-lg">
+                      <Link
+                        to="/admin/items"
+                        className="block px-4 py-2 hover:bg-gray-200"
+                      >
+                        View Items
+                      </Link>
+                      <Link
+                        to="/admin/users"
+                        className="block px-4 py-2 hover:bg-gray-200"
+                      >
+                        View Users
+                      </Link>
+                    </div>
+                  </div>
+                )}
+
+                {/* Dashboard Button */}
                 <button
                   onClick={handleDashboard}
                   className="relative px-3 py-2 text-gray-700 hover:text-blue-600 transition group"
@@ -62,6 +88,8 @@ export default function Navbar() {
                   Dashboard
                   <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
                 </button>
+
+                {/* Logout */}
                 <button
                   onClick={handleLogout}
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-md transition"
@@ -118,11 +146,29 @@ export default function Navbar() {
           <NavLink to="/" label="Home" mobile onClick={toggleMenu} />
           <NavLink to="/lost" label="Lost" mobile onClick={toggleMenu} />
           <NavLink to="/found" label="Found" mobile onClick={toggleMenu} />
-          <NavLink to ="/about" label="About" mobile onClick={toggleMenu}/>
-         
+          <NavLink to="/about" label="About" mobile onClick={toggleMenu} />
 
           {isLoggedIn ? (
             <>
+              {user?.isAdmin && (
+                <>
+                  <Link
+                    to="/admin/items"
+                    onClick={toggleMenu}
+                    className="block w-full text-left text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
+                  >
+                    Admin: Items
+                  </Link>
+                  <Link
+                    to="/admin/users"
+                    onClick={toggleMenu}
+                    className="block w-full text-left text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
+                  >
+                    Admin: Users
+                  </Link>
+                </>
+              )}
+
               <button
                 onClick={() => {
                   handleDashboard();
@@ -132,6 +178,7 @@ export default function Navbar() {
               >
                 Dashboard
               </button>
+
               <button
                 onClick={() => {
                   handleLogout();
