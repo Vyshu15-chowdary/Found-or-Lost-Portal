@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getItems } from "../Services/itemService";
+import { getItems } from "../Services/itemService.js";
 
 export default function Lost() {
   const [lostItems, setLostItems] = useState([]);
