@@ -19,11 +19,11 @@ function App() {
     <>
    
     <BrowserRouter>
-       
+       <Navbar/>
         <AuthProvider/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/About" element={<About/>}/>
+        <Route path="/about" element={<About/>}/>
         <Route path="/dashboard" element={<Dashboard/>}/>
         <Route path="/Found" element={<Found/>}/>
         <Route path="/Lost"element={<Lost/>}/>

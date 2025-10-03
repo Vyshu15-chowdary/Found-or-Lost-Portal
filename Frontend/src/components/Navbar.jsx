@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getToken, logout } from "../Services/authService.js";
@@ -9,7 +10,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const token = getToken();
-    setIsLoggedIn(!!token); 
+    setIsLoggedIn(!!token);
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -29,64 +30,50 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img src="/college-logo.jpeg" alt="College Logo" className="h-10 mr-2" />
-            <span className="font-bold text-xl text-blue-600">
-              NARAYANA ENGINEERING COLLEGE NELLORE ( Lost & Found Portal)
+          <Link to="/" className="flex items-center group">
+            <img
+              src="/college-logo.jpeg"
+              alt="College Logo"
+              className="h-10 w-10 rounded-full border-2 border-blue-500 mr-3"
+            />
+            <span className="font-extrabold text-lg sm:text-xl text-blue-700 group-hover:text-blue-800 transition">
+              NECN Lost & Found Portal
             </span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-4 items-center">
-            <Link
-              to="/"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            >
-              Home
-            </Link>
-            <Link
-              to="/lost"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            >
-              Lost
-            </Link>
-            <Link
-              to="/found"
-              className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            >
-              Found
-            </Link>
+          <div className="hidden md:flex space-x-6 items-center">
+            <NavLink to="/" label="Home" />
+            <NavLink to="/lost" label="Lost" />
+            <NavLink to="/found" label="Found" />
+            <NavLink to ="/about" label="About"/>
 
             {isLoggedIn ? (
               <>
                 <button
                   onClick={handleDashboard}
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
+                  className="relative px-3 py-2 text-gray-700 hover:text-blue-600 transition group"
                 >
                   Dashboard
+                  <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-md transition"
                 >
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-                >
-                  Login
-                </Link>
+                <NavLink to="/login" label="Login" />
                 <Link
                   to="/signup"
-                  className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition"
                 >
                   Signup
                 </Link>
@@ -98,7 +85,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
               <svg
-                className="h-6 w-6"
+                className="h-7 w-7"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -126,28 +113,11 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white px-4 pt-2 pb-4 space-y-1">
-          <Link
-            to="/"
-            className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            onClick={toggleMenu}
-          >
-            Home
-          </Link>
-          <Link
-            to="/lost"
-            className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            onClick={toggleMenu}
-          >
-            Lost
-          </Link>
-          <Link
-            to="/found"
-            className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-            onClick={toggleMenu}
-          >
-            Found
-          </Link>
+        <div className="md:hidden bg-white shadow-md px-4 pt-3 pb-4 space-y-2 animate-fadeIn">
+          <NavLink to="/" label="Home" mobile onClick={toggleMenu} />
+          <NavLink to="/lost" label="Lost" mobile onClick={toggleMenu} />
+          <NavLink to="/found" label="Found" mobile onClick={toggleMenu} />
+          <NavLink to ="/about" label="About" mobile onClick={toggleMenu}/>
 
           {isLoggedIn ? (
             <>
@@ -156,7 +126,7 @@ export default function Navbar() {
                   handleDashboard();
                   toggleMenu();
                 }}
-                className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded w-full text-left"
+                className="block w-full text-left text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
               >
                 Dashboard
               </button>
@@ -165,24 +135,18 @@ export default function Navbar() {
                   handleLogout();
                   toggleMenu();
                 }}
-                className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded w-full text-left"
+                className="block w-full text-left bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-md"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link
-                to="/login"
-                className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
-                onClick={toggleMenu}
-              >
-                Login
-              </Link>
+              <NavLink to="/login" label="Login" mobile onClick={toggleMenu} />
               <Link
                 to="/signup"
-                className="block text-gray-700 hover:text-blue-500 px-3 py-2 rounded"
                 onClick={toggleMenu}
+                className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md"
               >
                 Signup
               </Link>
@@ -191,5 +155,24 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+  );
+}
+
+function NavLink({ to, label, mobile, onClick }) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className={`relative px-3 py-2 transition ${
+        mobile
+          ? "block text-gray-700 hover:text-blue-500"
+          : "text-gray-700 hover:text-blue-600 group"
+      }`}
+    >
+      {label}
+      {!mobile && (
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+      )}
+    </Link>
   );
 }
