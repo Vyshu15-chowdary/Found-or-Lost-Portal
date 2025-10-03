@@ -19,7 +19,7 @@ function App() {
     <>
    
     <BrowserRouter>
-        <Navbar/>
+       
         <AuthProvider/>
       <Routes>
         <Route path="/" element={<Home />} />
