@@ -14,7 +14,7 @@ export default function Home() {
       {/* Hero Section */}
       <section className= "relative bg-cover bg-center bg-no-repeat min-h-[90vh] flex flex-col justify-center items-center text-center"
         style={{
-          backgroundImage: "url('/Necn.jpg')",
+          backgroundImage: "url('/Necn1.jpg')",
          }} >
      <h1 className="text-6xl font-extrabold mb-6 bg-gradient-to-r from-white to-pink-400 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(0,0,0,0.7)]">
   Lost & Found Portal
