@@ -1,6 +1,6 @@
 // src/Pages/About.jsx
 import React from "react";
-import collegeImage from "/college-hero.jpeg"; 
+import collegeImage from "/Necn.jpg"; 
 import collegeLogo from "/college-logo.jpeg";
 import { FaSearch, FaHandsHelping, FaClock } from "react-icons/fa";
 
@@ -13,7 +13,7 @@ export default function About() {
         className="relative h-[450px] flex items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url(${collegeImage})` }}
       >
-        <div className="bg-black/50 p-8 rounded-xl text-center text-white max-w-3xl">
+        <div className="bg-blue-500/50 p-8 rounded-xl text-center text-white max-w-3xl">
           <img src={collegeLogo} alt="College Logo" className="h-20 mx-auto mb-4 rounded-full border-4 border-blue-500 shadow-lg" />
           <h1 className="text-4xl md:text-5xl font-extrabold mb-3">Lost & Found Portal</h1>
           <p className="text-lg md:text-xl">Helping Students Recover Lost Items Quickly</p>
