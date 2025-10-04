@@ -3,17 +3,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
+
 export default function Home() {
   return (
+   
+ 
     
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
      
       {/* Hero Section */}
-      <section className="text-center py-20 px-6">
-        <h1 className="text-5xl font-extrabold text-gray-800 mb-4">
-          Lost & Found Portal
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+      <section className= "relative bg-cover bg-center bg-no-repeat min-h-[90vh] flex flex-col justify-center items-center text-center"
+        style={{
+          backgroundImage: "url('/Necn.jpg')",
+         }} >
+     <h1 className="text-6xl font-extrabold mb-6 bg-gradient-to-r from-white to-pink-400 bg-clip-text text-transparent drop-shadow-[0_3px_10px_rgba(0,0,0,0.7)]">
+  Lost & Found Portal
+</h1>
+
+
+
+      
+        <p className="text-lg text-white  max-w-2xl mx-auto mb-8">
           Helping you reunite with your belongings. Post lost items, report found items, and connect with owners quickly.
         </p>
         <div className="space-x-4">

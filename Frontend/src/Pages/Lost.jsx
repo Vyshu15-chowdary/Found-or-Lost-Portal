@@ -22,11 +22,14 @@ export default function Lost() {
   }, []);
 
   return (
+    
+
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 mt-24">
         <h2 className="text-3xl font-bold mb-6 text-center text-red-600">
           Lost Items
         </h2>
+       
 
         {loading ? (
           <p className="text-center">Loading...</p>
