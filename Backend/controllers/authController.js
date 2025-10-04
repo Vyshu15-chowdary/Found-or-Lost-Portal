@@ -2,6 +2,7 @@ import db from "../config/db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+
 const JWT_SECRET =" Process.env.JWT_SECRET"; // replace with .env in production
 
 // Register user
