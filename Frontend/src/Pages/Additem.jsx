@@ -38,6 +38,7 @@ export default function AddItem() {
       data.append("description", formData.description);
       data.append("contact", formData.contact);
       data.append("type", formData.type);
+      data.append("phone",phone);
       if (formData.image) data.append("image", formData.image);
 
       const response = await axios.post(

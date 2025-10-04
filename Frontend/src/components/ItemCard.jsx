@@ -50,9 +50,20 @@ export default function ItemCard({ item }) {
 
         {/* Actions */}
         <div className="mt-5 flex justify-between items-center">
-          <button className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition">
+           <div className="flex items-center gap-2">
+            <a
+      href={`tel:${item.phone}`}
+      className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition"
+    >
+      📞 Call
+    </a>
+     <span className="text-sm text-gray-700 font-medium">
+      {item.phone || "No phone"}
+    </span>
+           </div>
+         {/* <button className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition">
             Contact
-          </button>
+          </button>*/}
           <LinkButton type={item.status} />
         </div>
       </div>
