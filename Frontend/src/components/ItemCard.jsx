@@ -13,11 +13,16 @@ export default function ItemCard({ item }) {
     <div className="group relative bg-white/70 backdrop-blur-md rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-2">
       {/* Item Image */}
       <div className="relative">
-        <img
-          src={item.image || "/placeholder.png"}
-          alt={item.title || "Unknown Item"}
-          className="w-full h-48 object-cover"
-        />
+       <img
+  src={
+    item.image
+      ? `http://localhost:5000${item.image}` // Full backend URL
+      : "/placeholder.png"
+  }
+  alt={item.title || "Unknown Item"}
+  className="w-full h-48 object-cover"
+/>
+
         <span
           className={`absolute top-3 left-3 px-3 py-1 text-xs rounded-full font-semibold shadow-md ${
             item.status === "lost"
@@ -39,7 +44,7 @@ export default function ItemCard({ item }) {
         </p>
 
         <div className="mt-3 space-y-1 text-sm text-gray-500">
-          <p>📍 {item.contact || "No contact provided"}</p>
+          <p>📞 {item.contact || "No contact provided"}</p>
           <p>📅 {item.created_at?.slice(0, 10) || "Unknown Date"}</p>
         </div>
 
