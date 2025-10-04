@@ -1,38 +1,40 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import bodyParser from "body-parser"
 import authRoutes from "./routes/auth.js";
 import itemRoutes from "./routes/itemRoutes.js";
 import db from "./config/db.js";
+import fs from "fs";
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//connect to db
+// Serve uploaded images
+app.use("/uploads", express.static("uploads"));
 
-db.connect((err)=>{
-    if(err){
-        console.log("Database connection failed:",err);
-    }else{
-        console.log("connected db successfully")
-    }
-})
+// Connect to DB
+db.connect((err) => {
+  if (err) console.log("Database connection failed:", err);
+  else console.log("Connected to DB successfully");
+});
+// Check if uploads folder exists, create if not
+const uploadDir = "uploads";
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 // Test route
 app.get("/", (req, res) => res.send("Found or Lost Portal API running"));
 
-// Use routes
+// Routes
 app.use("/api/items", itemRoutes);
-app.use("/api/auth",authRoutes);
-app.get("/",(req,res)=>{
-    res.send("API running....")
-});
-
+app.use("/api/auth", authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
