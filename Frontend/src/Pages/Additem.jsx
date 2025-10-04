@@ -2,39 +2,62 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function AddItem() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [contact, setContact] = useState("");
-  const [type, setType] = useState("found"); // default type
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    contact: "",
+    type: "found", // default type
+    image: null,   // store file object
+  });
+
   const [message, setMessage] = useState("");
 
+  // Handle text input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle image file selection
+  const handleImageChange = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
+  };
+
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Debug: check what is being sent
-    console.log({ title, description, contact, type });
-
-    // Simple validation
-    if (!title || !type) {
+    if (!formData.title || !formData.type) {
       setMessage("Title and Type are required");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/items", {
-        title,
-        description,
-        contact,
-        type,
-      });
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("contact", formData.contact);
+      data.append("type", formData.type);
+      if (formData.image) data.append("image", formData.image);
+
+      const response = await axios.post(
+        "http://localhost:5000/api/items",
+        data,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       setMessage("Item added successfully!");
-      // Clear form
-      setTitle("");
-      setDescription("");
-      setContact("");
-      setType("found");
-      console.log(response.data);
+      setFormData({
+        title: "",
+        description: "",
+        contact: "",
+        type: "found",
+        image: null,
+      });
+
+      console.log("Created item:", response.data);
     } catch (err) {
       console.error(err.response?.data || err);
       setMessage(err.response?.data?.error || "Failed to add item");
@@ -49,35 +72,49 @@ export default function AddItem() {
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Add Item</h2>
 
-        {message && <p className="mb-4 text-center text-red-500">{message}</p>}
+        {message && (
+          <p className="mb-4 text-center text-red-500">{message}</p>
+        )}
 
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
           placeholder="Item Title"
           className="w-full p-2 mb-3 border rounded"
           required
         />
 
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
           placeholder="Description"
           className="w-full p-2 mb-3 border rounded"
         />
 
         <input
           type="text"
-          value={contact}
-          onChange={(e) => setContact(e.target.value)}
+          name="contact"
+          value={formData.contact}
+          onChange={handleChange}
           placeholder="Contact Info"
           className="w-full p-2 mb-3 border rounded"
         />
 
+        <input
+          type="file"
+          name="image"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="w-full mb-3"
+        />
+
         <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
+          name="type"
+          value={formData.type}
+          onChange={handleChange}
           className="w-full p-2 mb-4 border rounded"
           required
         >
