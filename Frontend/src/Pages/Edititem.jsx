@@ -7,14 +7,16 @@ export default function EditItem() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({ name: "", description: "" });
+  const [formData, setFormData] = useState({ title: "", description: "" });
 
   // Load item data
   useEffect(() => {
     const fetchItem = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/items/${id}`);
-        setFormData({ name: res.data.name, description: res.data.description });
+        setFormData({ title: res.data.title || "", description: res.data.description || "",
+          contact:res.data.contact || "", type: res.data.status|| ""
+         });
       } catch (err) {
         console.error("Failed to load item", err);
       }
@@ -49,8 +51,8 @@ export default function EditItem() {
         <label className="block mb-2 font-semibold">Name</label>
         <input
           type="text"
-          name="name"
-          value={formData.name}
+          name="title"
+          value={formData.title ||""}
           onChange={handleChange}
           className="border rounded w-full p-2 mb-4"
           required
@@ -59,7 +61,7 @@ export default function EditItem() {
         <label className="block mb-2 font-semibold">Description</label>
         <textarea
           name="description"
-          value={formData.description}
+          value={formData.description || ""}
           onChange={handleChange}
           className="border rounded w-full p-2 mb-4"
           required

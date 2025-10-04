@@ -69,7 +69,7 @@ export default function Dashboard() {
                 {/* Action Buttons */}
                 <div className="flex justify-between mt-2">
                   <Link
-                    to={`/edit-item/${item.id}`} // you can later build EditItem.jsx
+                    to={`/edit-item/${item.id}`} 
                     className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
                   >
                     Edit
