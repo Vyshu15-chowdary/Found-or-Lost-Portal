@@ -44,26 +44,20 @@ export default function ItemCard({ item }) {
         </p>
 
         <div className="mt-3 space-y-1 text-sm text-gray-500">
-          <p>📞 {item.contact || "No contact provided"}</p>
+          {/*intentionally hidden number*/}
+          {/*<p>📞 {item.contact || "No contact provided"}</p> */}
           <p>📅 {item.created_at?.slice(0, 10) || "Unknown Date"}</p>
         </div>
 
         {/* Actions */}
         <div className="mt-5 flex justify-between items-center">
-           <div className="flex items-center gap-2">
-            <a
-      href={`tel:${item.phone}`}
-      className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition"
-    >
-      📞 Call
-    </a>
-     <span className="text-sm text-gray-700 font-medium">
-      {item.phone || "No phone"}
-    </span>
-           </div>
-         {/* <button className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition">
+         
+
+          <button onClick={() =>alert("Please contact our support team at +91 91099123 55501")}
+  className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-lg text-sm font-medium shadow hover:opacity-90 transition" > 
+         
             Contact
-          </button>*/}
+          </button>
           <LinkButton type={item.status} />
         </div>
       </div>
