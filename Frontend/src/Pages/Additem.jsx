@@ -5,7 +5,9 @@ export default function AddItem() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    contact: "",
+    contact:"",
+     phone: "+919109912355", 
+  
     type: "found", // default type
     image: null,   // store file object
   });
@@ -38,7 +40,7 @@ export default function AddItem() {
       data.append("description", formData.description);
       data.append("contact", formData.contact);
       data.append("type", formData.type);
-      data.append("phone",phone);
+      data.append("phone",formData.phone);
       if (formData.image) data.append("image", formData.image);
 
       const response = await axios.post(
