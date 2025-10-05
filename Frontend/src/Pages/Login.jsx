@@ -15,6 +15,11 @@ export default function Login() {
         password,
       });
 
+      //store token and user data
+
+      localStorage.setItem("token",response.data.token);
+      localStorage.setItem("user",JSON.stringify(response.data.token));
+
       setMessage(response.data.message);
       console.log("Login success:", response.data);
 

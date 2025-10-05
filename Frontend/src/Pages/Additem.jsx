@@ -5,12 +5,13 @@ export default function AddItem() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    contact:"",
-     phone: "+919109912355", 
-  
-    type: "found", // default type
-    image: null,   // store file object
+    phone:"+9109912355",
+    contact: "",           // optional user input
+    type: "found",         // default type
+    image: null,           // store file object
   });
+
+  const defaultPhone = "+919109912355"; // default phone number (hidden)
 
   const [message, setMessage] = useState("");
 
@@ -34,24 +35,38 @@ export default function AddItem() {
       return;
     }
 
+    //token
+
+    const token = localStorage.getItem("token");
+    if(!token){
+      setMessage("please login first");
+      return;
+    }
+
     try {
       const data = new FormData();
       data.append("title", formData.title);
       data.append("description", formData.description);
       data.append("contact", formData.contact);
+      data.append("phone", defaultPhone); // send default phone
       data.append("type", formData.type);
-      data.append("phone",formData.phone);
       if (formData.image) data.append("image", formData.image);
 
       const response = await axios.post(
         "http://localhost:5000/api/items",
         data,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { 
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${localStorage.getItem("token")}` // optional JWT
+          },
         }
       );
 
       setMessage("Item added successfully!");
+      console.log("created item:",response.data);
+
+      //reset form
       setFormData({
         title: "",
         description: "",
@@ -102,7 +117,7 @@ export default function AddItem() {
           name="contact"
           value={formData.contact}
           onChange={handleChange}
-          placeholder="Contact Info"
+          placeholder="Contact Info (optional)"
           className="w-full p-2 mb-3 border rounded"
         />
 

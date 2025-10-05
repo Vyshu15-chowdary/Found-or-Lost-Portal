@@ -11,6 +11,9 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Example: get logged-in user info from localStorage or context
+  const currentUser = JSON.parse(localStorage.getItem("user")); // { id: 1, name: "Vyshnavi" }
+
   // Fetch items from backend
   const fetchItems = async () => {
     try {
@@ -46,14 +49,19 @@ export default function Dashboard() {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/items/${id}`);
+      await axios.delete(`http://localhost:5000/api/items/${id}`, {
+        headers: { Authorization: `Bearer ${currentUser?.token}` } // send JWT if backend requires
+      });
+
       const updatedItems = items.filter((item) => item.id !== id);
       setItems(updatedItems);
-      setFilteredItems(updatedItems.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchTerm) ||
-          (item.description && item.description.toLowerCase().includes(searchTerm))
-      ));
+      setFilteredItems(
+        updatedItems.filter(
+          (item) =>
+            item.title.toLowerCase().includes(searchTerm) ||
+            (item.description && item.description.toLowerCase().includes(searchTerm))
+        )
+      );
       alert("Item deleted successfully!");
     } catch (err) {
       console.error(err);
@@ -116,21 +124,23 @@ export default function Dashboard() {
               <div key={item.id} className="relative">
                 <ItemCard item={item} />
 
-                {/* Action Buttons */}
-                <div className="flex justify-between mt-2">
-                  <Link
-                    to={`/edit-item/${item.id}`} 
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
+                {/* Only show action buttons for owner */}
+                {currentUser && item.user_id === currentUser.id && (
+                  <div className="flex justify-between mt-2">
+                    <Link
+                      to={`/edit-item/${item.id}`}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
