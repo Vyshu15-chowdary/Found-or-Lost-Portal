@@ -21,8 +21,8 @@ const upload = multer({ storage });
 // Routes
 
 // POST /api/items with image upload
-router.post("/", upload.single("image") ,createItem);
-router.put("/:id",upload.single("image"),updateItem);
+router.post("/",authenticateToken, upload.single("image") ,createItem);
+router.put("/:id",authenticateToken,upload.single("image"),updateItem);
 router.get("/", getAllItems);
 router.get("/:id",getItemById);
 router.put("/:id",authenticateToken,updateItem);
