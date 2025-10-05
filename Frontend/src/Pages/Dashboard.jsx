@@ -12,7 +12,7 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Example: get logged-in user info from localStorage or context
-  const currentUser = JSON.parse(localStorage.getItem("user")); // { id: 1, name: "Vyshnavi" }
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   // Fetch items from backend
   const fetchItems = async () => {
@@ -73,7 +73,12 @@ export default function Dashboard() {
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-6">
+     <div
+      className="min-h-screen relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/background2.jpg')" }} 
+    >
+   <div className="min-h-screen  py-10 px-6"> 
+      
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
@@ -147,5 +152,7 @@ export default function Dashboard() {
         )}
       </div>
     </div>
+    </div>
+  
   );
 }

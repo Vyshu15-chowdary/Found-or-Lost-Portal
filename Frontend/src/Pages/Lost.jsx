@@ -23,10 +23,15 @@ export default function Lost() {
 
   return (
     
-
+      
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 mt-24">
-        <h2 className="text-3xl font-bold mb-6 text-center text-red-600">
+      <div
+      className="min-h-screen relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/background2.jpg')" }} 
+    >
+      <div className="min-h-screen  py-10 px-6"> 
+      <div className="max-w-6xl mx-auto px-4 ">
+        <h2 className="text-3xl font-bold mb-6 text-center text-red-700">
           Lost Items
         </h2>
        
@@ -41,10 +46,13 @@ export default function Lost() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {lostItems.map((item) => (
               <ItemCard key={item.id} item={item} />
+              
             ))}
           </div>
         )}
       </div>
+    </div>
+    </div>
     </div>
   );
 }

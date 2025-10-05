@@ -24,7 +24,7 @@ export default function Found() {
   return (
     <div
       className="min-h-screen relative bg-cover bg-center"
-      style={{ backgroundImage: "url('/background.jpg')" }} 
+      style={{ backgroundImage: "url('/background2.jpg')" }} 
     >
       
 
