@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <div className="flex items-center mb-4">
             <img src="/college-logo.jpeg" alt="College Logo" className="h-10 mr-2" />
-            <span className="text-xl font-bold text-yellow-400">
+            <span className="text-xl font-bold text-blue-700">
               Lost & Found Portal
             </span>
           </div>
@@ -24,22 +24,22 @@ export default function Footer() {
           <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
           <ul className="space-y-2">
             <li>
-              <Link to="/" className="hover:text-yellow-400">
+              <Link to="/" className="hover:text-blue-500">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/lost" className="hover:text-yellow-400">
+              <Link to="/lost" className="hover:text-blue-500">
                 Lost
               </Link>
             </li>
             <li>
-              <Link to="/found" className="hover:text-yellow-400">
+              <Link to="/found" className="hover:text-blue-500">
                 Found
               </Link>
             </li>
             <li>
-              <Link to="/dashboard" className="hover:text-yellow-400">
+              <Link to="/dashboard" className="hover:text-blue-500">
                 Dashboard
               </Link>
             </li>
