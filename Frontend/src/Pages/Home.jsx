@@ -72,7 +72,7 @@ export default function Home() {
           Ready to get started?
         </h2>
         <Link
-          to="/items"
+          to="/dashboard"
           className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg shadow-lg transition text-lg"
         >
           View All Items
