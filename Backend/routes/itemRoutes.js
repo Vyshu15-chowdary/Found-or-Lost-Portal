@@ -1,7 +1,7 @@
 import express from "express";
 import { createItem, getAllItems, deleteItem,updateItem,getItemById } from "../controllers/itemController.js";
 import multer from "multer";
-
+import { authenticateToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -25,7 +25,7 @@ router.post("/", upload.single("image") ,createItem);
 router.put("/:id",upload.single("image"),updateItem);
 router.get("/", getAllItems);
 router.get("/:id",getItemById);
-router.put("/:id",updateItem);
-router.delete("/:id", deleteItem);
+router.put("/:id",authenticateToken,updateItem);
+router.delete("/:id",authenticateToken, deleteItem);
 
 export default router;

@@ -7,15 +7,17 @@ export const createItem = (req, res) => {
 
   const { title, description, contact, type } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
-
+  
+  //extract from jwt 
+  const userId = req.user.id;
   if (!title || !type) {
     return res.status(400).json({ error: "Title and Type are required" });
   }
 
   const query =
-    "INSERT INTO items (title, description, contact, status, image) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO items (title, description, contact, status, image,user_id) VALUES (?, ?, ?, ?, ? , ?)";
 
-  db.query(query, [title, description, contact, type, image], (err, result) => {
+  db.query(query, [title, description, contact, type, image,userId], (err, result) => {
     if (err) return res.status(500).json({ error: err.sqlMessage || "Database error" });
     res.json({ message: "Item added successfully", itemId: result.insertId });
   });
@@ -60,7 +62,7 @@ export const updateItem = (req, res) => {
     values = [title, description, contact, type, id];
   }
 
-  db.query(query, values, (err, result) => {
+  db.query(query, values,[id,userId],(err, result) => {
     if (err) return res.status(500).json({ error: err.sqlMessage || "Database error" });
     if (result.affectedRows === 0) return res.status(404).json({ error: "Item not found" });
     res.json({ message: "Item updated successfully" });
@@ -71,7 +73,7 @@ export const updateItem = (req, res) => {
 export const deleteItem = (req, res) => {
   const { id } = req.params;
   const query = "DELETE FROM items WHERE id = ?";
-  db.query(query, [id], (err, result) => {
+  db.query(query, [id,userId], (err, result) => {
     if (err) return res.status(500).json({ error: err.sqlMessage || "Database error" });
     if (result.affectedRows === 0) return res.status(404).json({ error: "Item not found" });
     res.json({ message: "Item deleted successfully" });
