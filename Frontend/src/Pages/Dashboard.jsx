@@ -14,10 +14,15 @@ export default function Dashboard() {
   // Example: get logged-in user info from localStorage or context
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
+   const token = currentUser?.token; // JWT token
   // Fetch items from backend
   const fetchItems = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/items");
+      const res = await axios.get("http://localhost:5000/api/items",{
+         headers: { Authorization: `Bearer ${token}` }, //token added
+      });
+
+
       setItems(res.data);
       setFilteredItems(res.data);
     } catch (err) {
@@ -27,6 +32,8 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
+
+   
 
   useEffect(() => {
     fetchItems();
@@ -73,86 +80,84 @@ export default function Dashboard() {
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   return (
-     <div
+    <div
       className="min-h-screen relative bg-cover bg-center"
-      style={{ backgroundImage: "url('/background2.jpg')" }} 
+      style={{ backgroundImage: "url('/background2.jpg')" }}
     >
-   <div className="min-h-screen  py-10 px-6"> 
-      
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-          <h1 className="text-3xl font-bold text-gray-800">📂 My Dashboard</h1>
+      <div className="min-h-screen py-10 px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+            <h1 className="text-3xl font-bold text-gray-800">📂 My Dashboard</h1>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            {/* Search Input */}
-            <div className="relative w-full sm:w-64">
-              <input
-                type="text"
-                placeholder="Search items..."
-                value={searchTerm}
-                onChange={handleSearch}
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
-              />
-              <svg
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              {/* Search Input */}
+              <div className="relative w-full sm:w-64">
+                <input
+                  type="text"
+                  placeholder="Search items..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition"
                 />
-              </svg>
-            </div>
-
-            {/* Add Item Button */}
-            <Link
-              to="/add-item"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded shadow transition transform hover:scale-105"
-            >
-              + Add New Item
-            </Link>
-          </div>
-        </div>
-
-        {/* Items Grid */}
-        {filteredItems.length === 0 ? (
-          <p className="text-gray-600">No items found.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <div key={item.id} className="relative">
-                <ItemCard item={item} />
-
-                {/* Only show action buttons for owner */}
-                {currentUser && item.user_id === currentUser.id && (
-                  <div className="flex justify-between mt-2">
-                    <Link
-                      to={`/edit-item/${item.id}`}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
+                <svg
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+                  />
+                </svg>
               </div>
-            ))}
+
+              {/* Add Item Button */}
+              <Link
+                to="/add-item"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded shadow transition transform hover:scale-105"
+              >
+                + Add New Item
+              </Link>
+            </div>
           </div>
-        )}
+
+          {/* Items Grid */}
+          {filteredItems.length === 0 ? (
+            <p className="text-gray-600">No items found.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {filteredItems.map((item) => (
+                <div key={item.id} className="relative">
+                  <ItemCard item={item} />
+
+                  {/* Only show action buttons for owner */}
+                  {currentUser && item.user_id === currentUser.id && (
+                    <div className="flex justify-between mt-2">
+                      <Link
+                        to={`/edit-item/${item.id}`}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
-    </div>
-  
   );
 }
