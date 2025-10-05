@@ -30,7 +30,7 @@ export default function Found() {
 
       {/* Main content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 pb-12">
-        <h2 className="text-3xl font-bold mb-6 text-center text-white">
+        <h2 className="text-3xl font-bold mb-6 text-center text-green-600">
           Found Items
         </h2>
 
