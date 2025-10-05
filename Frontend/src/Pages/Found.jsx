@@ -9,8 +9,8 @@ export default function Found() {
   useEffect(() => {
     const fetchFoundItems = async () => {
       try {
-        const items = await getItems(); // fetch all items
-        setFoundItems(items.filter((item) => item.status === "found")); // use status
+        const items = await getItems();
+        setFoundItems(items.filter((item) => item.status === "found"));
       } catch (err) {
         console.error("Failed to fetch found items:", err);
       } finally {
@@ -22,22 +22,33 @@ export default function Found() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 mt-24">
-        <h2 className="text-3xl font-bold mb-6 text-center text-green-600">
+    <div
+      className="min-h-screen relative bg-cover bg-center"
+      style={{ backgroundImage: "url('/background.jpg')" }} 
+    >
+      
+
+      {/* Main content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 pb-12">
+        <h2 className="text-3xl font-bold mb-6 text-center text-white">
           Found Items
         </h2>
 
         {loading ? (
-          <p className="text-center">Loading...</p>
+          <p className="text-center text-white">Loading...</p>
         ) : foundItems.length === 0 ? (
-          <p className="text-center text-gray-600">
+          <p className="text-center text-white text-opacity-80">
             No found items reported yet.
           </p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {foundItems.map((item) => (
-              <ItemCard key={item.id} item={item} />
+              <div
+                key={item.id}
+                className="bg-white bg-opacity-90 shadow-lg rounded-lg p-4"
+              >
+                <ItemCard item={item} />
+              </div>
             ))}
           </div>
         )}
