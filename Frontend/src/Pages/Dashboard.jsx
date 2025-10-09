@@ -56,8 +56,10 @@ export default function Dashboard() {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
 
     try {
+
+      const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/api/items/${id}`, {
-        headers: { Authorization: `Bearer ${currentUser?.token}` } // send JWT if backend requires
+        headers: { Authorization: `Bearer ${token}` } // send JWT if backend requires
       });
 
       const updatedItems = items.filter((item) => item.id !== id);
