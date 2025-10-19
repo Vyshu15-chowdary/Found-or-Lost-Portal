@@ -39,7 +39,7 @@ export default function Login() {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
-        {message && <p className="mb-4 text-center text-red-500">{message}</p>}
+        {message && <p className="mb-4 text-center text-green-700">{message}</p>}
 
         <input
           type="email"
